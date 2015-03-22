@@ -13,53 +13,52 @@ drop table if exists ProductOrders;
 set foreign_key_checks = 1;
 
 -- Create the tables.
-
 create table RawMaterials (
-name varchar,
+rawMaterialName varchar(30),
 lastDeliveryDate date,
-lastDeliveryAmmount int,
-quantity int,
-primary key(name)
+lastDeliveryAmount int,
+totalQuantity int,
+unit varchar(30),
+primary key(rawMaterialName)
 );
 
 create table Products (
-productName varchar,
+productName varchar(30),
 primary key(productName)
 );
 
 create table Ingredients (
-materialName varchar,
-productName varchar,
+ingredientName varchar(30),
+productName varchar(30),
 quantity int,
-unit int,
-primary key (materialName, productName),
-foreign key (materialName) references RawMaterials(name),
+primary key (ingredientName, productName),
+foreign key (ingredientName) references RawMaterials(rawMaterialName),
 foreign key (productName) references Products(productName)
 );
 
 create table Customers (
-name varchar,
-address varchar,
-username varchar,
-password varchar,
-primary key (name)
+customerName varchar(30),
+address varchar(30),
+username varchar(30),
+password varchar(30),
+primary key (customerName)
 );
 
 create table Orders (
-id int auto_increment,
+orderId int auto_increment,
 desiredDeliveryDate date,
-customerName varchar,
-primary key(id),
-foreign key (customerName) references Customers(name);
+customerName varchar(30),
+primary key(orderId),
+foreign key (customerName) references Customers(customerName)
 );
 
 create table Pallets (
-id int auto_increment,
+palletId int auto_increment,
 productionDateTime datetime,
-state varchar,
-blocked boolean,
-productName varchar,
-primaty key (id)
+state varchar(30),
+blocked bool,
+productName varchar(30),
+primary key (palletId),
 foreign key (productName) references Products(productName)
 );
 
@@ -68,15 +67,30 @@ palletId int,
 orderId int,
 deliveryDate date,
 primary key (palletId, orderId),
-foreign key(palletId) references Pallets(id),
-foreign key(orderId) references Orders(id)
+foreign key (palletId) references Pallets(palletId),
+foreign key (orderId) references Orders(orderId)
 );
 
 create table ProductOrders (
 orderId int,
-productName varchar,
+productName varchar(30),
 nbrOfPallets int,
 primary key (orderId, productName),
-foreign key (orderId) references Orders(id),
+foreign key (orderId) references Orders(orderId),
 foreign key (productName) references Products(productName)
 );
+
+insert into Products(productName) values('Nut Ring');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Flour', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Butter', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Icing Sugar', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Roasted, chopped nuts', '2000-01-01', 10, 100, 'g');
+insert into Ingredients(ingredientName, productName, quantity) values('Flour', 'Nut Ring', 450);
+insert into Ingredients(ingredientName, productName, quantity) values('Butter', 'Nut Ring', 450);
+insert into Ingredients(ingredientName, productName, quantity) values('Icing sugar', 'Nut Ring', 190);
+insert into Ingredients(ingredientName, productName, quantity) values('Roasted, chopped nuts', 'Nut Ring', 225);
+insert into Customers(customerName, address, username, password) values('Finkakor AB', 'Helsingborg', 'finkakor', 'password');
+insert into Orders(desiredDeliveryDate, customerName) values('2000-01-01', 'Finkakor AB');
+insert into Pallets(palletId) values(1);
+
+
