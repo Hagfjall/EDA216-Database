@@ -1,0 +1,76 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Detta är ett exempel på ett latexdokument.
+% 
+% Alla dokument består av följande delar:
+%
+%          \documentclass[optioner]{dokumentklass}
+%            ...inställningar...
+%          \begin{document}
+%            ...text...
+%          \end{document}
+%
+% Som ni kanske redan har förstått är används procent (%) för
+% kommentarer.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}                % För svenska bokstäver
+\usepackage[swedish]{babel}             % För svensk avstavning och svenska
+                                        % rubriker (t ex "innehållsförteckning)
+\title{Database Project}
+\author{Erik Stenlund, , , }
+\author{Erik Stenlund (zba10est), D11, zba10est@student.lu.se \\
+		Fredrik Hagfjäll \\
+		Kit Gustavsson \\
+		Olof Wahlgren }
+\date{}           % Blir dagens datum om det utelämnas
+
+\begin{document}
+
+\maketitle   
+\thispagestyle{empty}                        % Skriver ut rubriken som vi
+                                % deklarerade ovan med \title, \author
+                                % och eventuellt \date
+\newpage
+
+\section{Introduction}          % Detta kommando gör en rubrik
+
+Ord avgränsas av ett eller flera blanktecken. Stycken avgränsas av en
+eller flera tomkrader. Det har ingen betydelse hur många blanktecken
+eller tomrader man använder. Den formatterade texten ser i alla fall
+likadan ut.
+
+Bindestreck finns i tre smaker: -, -- och ---. De används som i
+följande exempel:
+
+E-teknolog, 6--8 skivor bröd om dagen.
+
+--- Vackert väder i dag, sa amiralen.
+
+För att markera text skriver man \emph{så här}. Detta blir
+\textbf{fetstil}.
+
+\subsection{Varning}             % Detta blir en underrubrik
+
+Följande tecken kan man inte skriva direkt: \$  \&  \#  \%  \_  \{  and  \}.  
+Som synes måste man skriva ett bakvänt snedstreck framför dem.
+
+\subsubsection{En rubrik till}  %Detta blir en underunderrubrik
+
+\section{Requirements}
+
+\section{Implementation}
+
+\newpage
+\appendix
+\section{E/R-diagram} \label{App:er}
+
+\newpage
+\section{Relations} \label{App:rel}
+
+\newpage
+\section{SQL statements} \label{App:sql}
+
+
+\end{document}                 % The input file ends with this command.
