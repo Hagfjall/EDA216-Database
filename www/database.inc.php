@@ -92,6 +92,17 @@ class Database {
 	 */
 	private function executeUpdate($query, $param = null) {
 		// ...
+		try {  
+			$stmt = $this->conn->prepare($query);
+			$stmt->execute($param);
+			$result = $stmt->rowCount();
+
+		} catch (Exception $e) {
+			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
+			die($error);
+			
+		}	
+		return $result;		
 	}
 	
 	/**
@@ -117,6 +128,22 @@ class Database {
 			$i++;
 		}
 		return $ret;
+	}
+
+	public function producePallets($cookieType, $amount) {
+		$sql = "SELECT ingredientName AS name, quantity FROM Ingredients WHERE productName = ?";
+		$result = $this->executeQuery($sql, $cookieType);
+
+		$sql = "UPDATE RawMaterials SET totalQuantity = totalQuantity - ? WHERE rawMaterialName = ?";
+		$this->conn->beginTransaction();
+		foreach ($result as $ingr) {
+			$totAmount = 5400 * $ingr['quantity'] * $amount; //FÖRTYDLIGA SENARE
+			executeUpdate($sql, array($totAmount, $ingr['name']));
+		}
+		$this->conn->commit();
+
+		return $result; //ENDAST FÖR UTVECKLING
+
 	}
 }
 ?>
