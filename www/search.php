@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Search</title>
+<title>KK Sweden AB - Pallet Search</title>
 </head>
 <body>
 <!-- Code for barcode reader-box-->

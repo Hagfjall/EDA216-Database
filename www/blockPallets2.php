@@ -7,8 +7,8 @@
 ?>
 
 <html>
-<head><title>KK Sweden AB Production</title><head>
-<body><h1>Block pallets(s)</h1>
+<head><title>KK Sweden AB - Block Pallets</title><head>
+<body><h1>Block Pallets(s)</h1>
 	<p>
 	Movies showing:
 	<p>

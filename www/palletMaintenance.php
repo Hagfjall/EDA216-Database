@@ -10,11 +10,11 @@
 ?>
 <html>
 <head>
-<title>KK Sweden AB</title>
+<title>KK Sweden AB - Pallet Maintenance</title>
 </head>
 <body>
-<h1 align="center">KK Sweden AB Production</h1>
-<a href="blockPallets.php">Do you need to block one or more pallets?</a><br>
+<h1 align="center">Pallet Maintenance</h1>
+<a href="blockPallets.php">Block Pallets</a><br>
 <a href="search.php">Search</a><br>
 
 
