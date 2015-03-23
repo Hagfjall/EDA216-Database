@@ -15,24 +15,26 @@
 $(document).ready(function(){
 	$("#produce").click(function(){
 		var input = {product : $("#type").val(), amount : $("#amount").val()};	
-		$.get("produceReq.php", input, function(user){	
-		
-		$("p#res").append($("#amount").val());	
-		if (input.amount > 1) {	
-			$("p#res").append(" pallets of ");		
-			$("p#res").append($("#type").val());
-		
+		if (input.amount < 1) {
+
 		} else {
-			$("p#res").append(" pallet of ");		
-			$("p#res").append($("#type").val());
+			$.get("produceReq.php", input, function(user){	
 
-			
-		}
-			$("p#res").append("s has been produced </br>");	
-			
+				$("p#res").append($("#amount").val());	
+				if (input.amount > 1) {	
+					$("p#res").append(" pallets of ");		
+					$("p#res").append($("#type").val());
 
-			
+				} else {
+					$("p#res").append(" pallet of ");		
+					$("p#res").append($("#type").val());
+
+
+				}
+				$("p#res").append("s has been produced </br>");	
+
 		});
+		}
 	});
 });
 </script>
