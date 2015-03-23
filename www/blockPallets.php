@@ -12,6 +12,8 @@
 
 ?>
 
+
+
 <html>
 <head><title>KK Sweden AB Production</title><head>
 <body><h1>Block pallets(s)</h1>

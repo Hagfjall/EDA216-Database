@@ -13,5 +13,5 @@
 	
 	session_start();
 	$_SESSION['db'] = $db;
-	header("Location: production.php");
+	header("Location: palletMaintenance.php");
 ?>
