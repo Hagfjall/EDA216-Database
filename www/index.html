@@ -1,15 +1,31 @@
 <html>
 <head>
-<title>Movie Ticket Booking Login</title>
+<title>KK Sweden AB</title>
 </head>
 <body>
 
-<h1 align="center">Movie Booking Login</h1>
+<h1 align="center">KK Sweden AB Production</h1>
 
-<form method="post" action="login.php">
-    User id
-    <input type="text" size="20" name="userId" >
-    <input type="submit" value="Login">
+
+<a href="blocketPallets.php">Search for blocked pallets</a>
+<a href="search.php"
+
+<!-- Code for barcode reader-box-->
+<form method="post" action="barcodeReader.php">
+    <t>Barcode scanner for freezer-entrance <br>
+    <input type="text" size="20" name="Barcode scanner freezer-entrance">
+    <input type="submit" value="Scan">
+    <!-- Use different values for different barcode-readers -->
+    <input type="hidden" value="freezer-entrance" name="barcodeReader">
+</form>
+
+<!-- Code for barcode reader-box-->
+<form method="post" action="barcodeReader.php">
+    <t>Barcode scanner for freezer-exit <br>
+    <input type="text" size="20" name="Barcode scanner freezer-exit">
+    <input type="submit" value="Scan">
+    <!-- Use different values for different barcode-readers -->
+    <input type="hidden" value="freezer-exit" name="barcodeReader">
 </form>
 
 </body>
