@@ -1,14 +1,25 @@
+<?php
+  require_once('database.inc.php');
+  require_once("mysql_connect_data.inc.php");
+  $db = new Database($host, $userName, $password, $database);
+  $db->openConnection();
+  if (!$db->isConnected()) {
+    header("Location: cannotConnect.html");
+    exit();
+  }
+
+  session_start();
+  $_SESSION['db'] = $db;
+?>
 <html>
 <head>
 <title>KK Sweden AB</title>
 </head>
 <body>
-
 <h1 align="center">KK Sweden AB Production</h1>
+<a href="blockPallets.php">Do you need to block one or more pallets?</a><br>
+<a href="search.php">Search</a><br>
 
-
-<a href="blocketPallets.php">Search for blocked pallets</a>
-<a href="search.php"
 
 <!-- Code for barcode reader-box-->
 <form method="post" action="barcodeReader.php">
