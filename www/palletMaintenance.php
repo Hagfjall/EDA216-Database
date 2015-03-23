@@ -15,6 +15,7 @@
 <body>
 <h1 align="center">Pallet Maintenance</h1>
 <a href="blockPallets.php">Block Pallets</a><br>
+<a href="producePallets.php">Pallet Production</a><br>
 <a href="search.php">Search</a><br>
 
 
