@@ -147,7 +147,7 @@ class Database {
 		}
 		$this->conn->commit();
 
-		return $result; //ENDAST FÖR UTVECKLING
+		
 
 	}
 
@@ -161,6 +161,12 @@ class Database {
 			$i++;
 		}
 		return $ret;
+	}
+
+	public function getPallets() {
+		$sql = "SELECT palletId, productionDateTime AS prodDate, state, blocked, productName FROM Pallets";
+		$result = $this->executeQuery($sql);
+		return $result;
 	}
 }
 
