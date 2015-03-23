@@ -15,6 +15,7 @@
 <body>
 <h1 align="center">KK Sweden AB Production</h1>
 <a href="blockPallets.php">Do you need to block one or more pallets?</a><br>
+<a href="producePallets.php">Do you need to produce more pallets?</a><br>
 <a href="search.php">Search</a><br>
 
 
