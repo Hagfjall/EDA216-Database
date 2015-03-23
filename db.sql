@@ -54,7 +54,7 @@ foreign key (customerName) references Customers(customerName)
 
 create table Pallets (
 palletId int auto_increment,
-productionDateTime datetime,
+productionDateTime datetime not null default NOW(),
 state varchar(30),
 blocked bool,
 productName varchar(30),

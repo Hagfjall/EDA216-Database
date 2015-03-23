@@ -133,13 +133,17 @@ class Database {
 
 	public function producePallets($cookieType, $amount) {
 		$sql = "SELECT ingredientName AS name, quantity FROM Ingredients WHERE productName = ?";
-		$result = $this->executeQuery($sql, $cookieType);
+		$result = $this->executeQuery($sql, array($cookieType));
 
-		$sql = "UPDATE RawMaterials SET totalQuantity = totalQuantity - ? WHERE rawMaterialName = ?";
+		$updateQuery = "UPDATE RawMaterials SET totalQuantity = totalQuantity - ? WHERE rawMaterialName = ?";
+		$insertQuery = "INSERT INTO Pallets VALUES (null, default, 'production', null, ?)";
 		$this->conn->beginTransaction();
 		foreach ($result as $ingr) {
 			$totAmount = 5400 * $ingr['quantity'] * $amount; //FÖRTYDLIGA SENARE
-			executeUpdate($sql, array($totAmount, $ingr['name']));
+			$this->executeUpdate($updateQuery, array($totAmount, $ingr['name']));
+		}
+		for ($i = 0; $i < $amount; $i = $i + 1) {
+			$this->executeUpdate($insertQuery, array($cookieType));
 		}
 		$this->conn->commit();
 
