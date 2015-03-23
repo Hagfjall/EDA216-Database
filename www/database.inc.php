@@ -130,6 +130,7 @@ class Database {
 		return $ret;
 	}
 
+
 	public function producePallets($cookieType, $amount) {
 		$sql = "SELECT ingredientName AS name, quantity FROM Ingredients WHERE productName = ?";
 		$result = $this->executeQuery($sql, $cookieType);
@@ -145,5 +146,18 @@ class Database {
 		return $result; //ENDAST FÖR UTVECKLING
 
 	}
+
+	public function getProducts(){
+		$sql = "SELECT productName FROM Products";
+		$result = $this->executeQuery($sql);
+		$ret;
+		$i = 0;
+		foreach($result as $product){
+			$ret[$i] = $product['productName'];
+			$i++;
+		}
+		return $ret;
+	}
 }
+
 ?>
