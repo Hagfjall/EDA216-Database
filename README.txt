@@ -9,10 +9,12 @@ index:
 	barcode-reader-ruta för pallar in till Storage -> bekräfta inläsning
 	barcode-reader-ruta för pallar från Storage till delivery -> bekräfta inläsning
 
-Search:
-  Search for orderes that are to be delivired during a spec. time
-  search for how many pallets that have been produced during spec. time
-  search for pallet-id
+Search: (Innehåller inte någon info om BLOCKED products/pallets)
+	search for pallet-id
+	search for pallets of product
+	search for pallets of customer
+	Search for orderes that are to be delivired during a spec. time
+	search for how many pallets that have been produced during spec. time
 
 Blocked pallets:
   Ingredient
