@@ -14,7 +14,7 @@ class Database {
 	private $password;
 	private $database;
 	private $conn;
-
+	
 	/**
 	 * Constructs a database object for the specified user.
 	 */
@@ -24,18 +24,18 @@ class Database {
 		$this->password = $password;
 		$this->database = $database;
 	}
-
-	/**
+	
+	/** 
 	 * Opens a connection to the database, using the earlier specified user
 	 * name and password.
 	 *
-	 * @return true if the connection succeeded, false if the connection
-	 * couldn't be opened or the supplied user name and password were not
+	 * @return true if the connection succeeded, false if the connection 
+	 * couldn't be opened or the supplied user name and password were not 
 	 * recognized.
 	 */
 	public function openConnection() {
 		try {
-			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database",
+			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database", 
 					$this->userName,  $this->password);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
@@ -46,7 +46,7 @@ class Database {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Closes the connection to the database.
 	 */
@@ -63,12 +63,12 @@ class Database {
 	public function isConnected() {
 		return isset($this->conn);
 	}
-
+	
 	/**
 	 * Execute a database query (select).
 	 *
 	 * @param $query The query string (SQL), with ? placeholders for parameters
-	 * @param $param Array with parameters
+	 * @param $param Array with parameters 
 	 * @return The result set
 	 */
 	private function executeQuery($query, $param = null) {
@@ -82,18 +82,30 @@ class Database {
 		}
 		return $result;
 	}
-
+	
 	/**
 	 * Execute a database update (insert/delete/update).
 	 *
 	 * @param $query The query string (SQL), with ? placeholders for parameters
-	 * @param $param Array with parameters
+	 * @param $param Array with parameters 
 	 * @return The number of affected rows
 	 */
 	private function executeUpdate($query, $param = null) {
 		// ...
 	}
-
+	
+	/**
+	 * Check if a user with the specified user id exists in the database.
+	 * Queries the Users database table.
+	 *
+	 * @param userId The user id 
+	 * @return true if the user exists, false otherwise.
+	 */
+	public function userExists($userId) {
+		$sql = "select userId from Users where userId = ?";
+		$result = $this->executeQuery($sql, array($userId));
+		return count($result) == 1; 
+	}
 
 	public function getIngredients(){
 		$sql = "SELECT rawMaterialName FROM RawMaterials";

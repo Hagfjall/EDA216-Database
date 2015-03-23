@@ -1,15 +1,12 @@
 <?php
-  require_once('database.inc.php');
-  require_once("mysql_connect_data.inc.php");
-  $db = new Database($host, $userName, $password, $database);
-  $db->openConnection();
-  if (!$db->isConnected()) {
-    header("Location: cannotConnect.html");
-    exit();
-  }
-
-  session_start();
-  $_SESSION['db'] = $db;
+	require_once('database.inc.php');
+	
+	session_start();
+	$db = $_SESSION['db'];
+	$userId = $_SESSION['userId'];
+	$db->openConnection();
+	
+	$db->closeConnection();
 ?>
 <html>
 <head>
