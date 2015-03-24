@@ -185,7 +185,7 @@ class Database {
 
 
 		public function freezerExitScanner($palletId){
-		
+
 	}
 
 	public function getPalletInfo($palletId){
@@ -218,6 +218,15 @@ class Database {
 		return $result;
 
 	}
+	public function getPalletsByDeliveryDateTime($intervalStart, $intervalEnd){
+		$intervalStart = $this->getDateTime($intervalStart);
+		$intervalEnd = $this->getDateTime($intervalEnd);
+		$sql = "SELECT * FROM Pallets WHERE productionDateTime >= ? AND productionDateTime <= ?";
+		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
+		return $result;
+
+	}
+
 
 }
 
