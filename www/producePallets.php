@@ -17,17 +17,19 @@ $(document).ready(function(){
 		if (input.amount < 1) {
 
 		} else {
-			$.get("produceReq.php", input, function(user){	
+			$.get("produceReq.php", input, function(){	
 
 				$("p#res").append($("#amount").val());	
 				if (input.amount > 1) {	
 					$("p#res").append(" pallets of ");		
 					$("p#res").append($("#type").val());
+					$("p#res").append("s is now produced and stored in the freezer</br>");
 				} else {
 					$("p#res").append(" pallet of ");		
 					$("p#res").append($("#type").val());
+					$("p#res").append("s is now produced and stored in the freezer</br>");
 				}
-				$("p#res").append("s is now under production</br>");	
+					
 			});
 		}
 	});

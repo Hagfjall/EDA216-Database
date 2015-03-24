@@ -19,22 +19,12 @@
 <a href="search.php">Search</a><br>
 
 
-<!-- Code for barcode reader-box-->
-<form method="post" action="barcodeReader.php">
-    <t>Barcode scanner for freezer-entrance <br>
-    <input type="text" size="20" name="Barcode scanner freezer-entrance">
-    <input type="submit" value="Scan">
-    <!-- Use different values for different barcode-readers -->
-    <input type="hidden" value="freezerEntrance" name="barcodeReader">
-</form>
 
 <!-- Code for barcode reader-box-->
 <form method="post" action="barcodeReader.php">
     <t>Barcode scanner for freezer-exit <br>
-    <input type="text" size="20" name="Barcode scanner freezer-exit">
+    <input type="text" size="20" name="freezerExit">
     <input type="submit" value="Scan">
-    <!-- Use different values for different barcode-readers -->
-    <input type="hidden" value="freezerExit" name="barcodeReader">
 </form>
 
 </body>
