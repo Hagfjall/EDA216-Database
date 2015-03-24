@@ -62,21 +62,21 @@
 
 <p>
 	<t><Strong>Search by production date: </strong> <br>
-	<form method=post action="searchByProductionDate.php">
+	<form method=post action="searchByProductionDateTime.php">
 	From:
-  	<input type="datetime-local" name="intervalStart">
+  	<input type="datetime-local" value ="2015-01-01T11:42:13.510" name="productionIntervalStart">
  	 To:
- 	<input type="datetime-local" name="intervalEnd">
+ 	<input type="datetime-local" value ="2015-03-23T22:39:23.510" name="productionIntervalEnd">
 	<input type=submit value="Search by production date">
 	<form>
 <hr>
 <p>
 	<t><Strong>Search by delivery date: </strong> <br>
-	<form method=post action="searchByDeliveryDate.php">
+	<form method=post action="searchByDeliveryDateTime.php">
 	From:
-  	<input type="datetime-local" name="intervalStart">
+  	<input type="datetime-local" value ="2015-01-01T11:42:13.510" name="deliveryIntervalStart">
  	 To:
- 	<input type="datetime-local" name="intervalEnd">
+ 	<input type="datetime-local" value ="2015-03-23T22:39:23.510" name="deliveryIntervalEnd">
 	<input type=submit value="Search by delivery date">
 	<form>
 <hr>

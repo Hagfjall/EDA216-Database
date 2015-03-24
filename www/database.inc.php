@@ -192,7 +192,6 @@ class Database {
 		$sql = "select * from Pallets where palletId = ?";
 		$result = $this->executeQuery($sql, array($palletId));
 		return $result;
-
 	}
 
 	public function getPalletsWithProduct($productName){
@@ -211,6 +210,7 @@ class Database {
 		return $this->executeQuery($sql, array($customerName));
 	}
 
+	//TODO Check somewhere that the pallet actually exsits!
 	public function getOrdersWithProduct($palletId){
 		$sql = "SELECT productName from Pallets where palletId = ?";
 		$productName = $this->executeQuery($sql, array($palletId));
@@ -223,6 +223,15 @@ class Database {
 	public function deliverPallet($palletId, $orderId){
 		$sql = "INSERT INTO PalletDeliveries VALUES(?, ?, NOW())";
 		$this->executeUpdate($sql, array($palletId, $orderId));
+	}
+	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
+		$intervalStart = $this->getDateTime($intervalStart);
+		$intervalEnd = $this->getDateTime($intervalEnd);
+		$sql = "SELECT * FROM Pallets WHERE productionDateTime >= ? AND productionDateTime <= ?";
+		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
+		return $result;
+
+
 	}
 
 }
