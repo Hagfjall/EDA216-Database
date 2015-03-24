@@ -25,7 +25,7 @@
     <input type="text" size="20" name="Barcode scanner freezer-entrance">
     <input type="submit" value="Scan">
     <!-- Use different values for different barcode-readers -->
-    <input type="hidden" value="freezer-entrance" name="barcodeReader">
+    <input type="hidden" value="freezerEntrance" name="barcodeReader">
 </form>
 
 <!-- Code for barcode reader-box-->
@@ -34,7 +34,7 @@
     <input type="text" size="20" name="Barcode scanner freezer-exit">
     <input type="submit" value="Scan">
     <!-- Use different values for different barcode-readers -->
-    <input type="hidden" value="freezer-exit" name="barcodeReader">
+    <input type="hidden" value="freezerExit" name="barcodeReader">
 </form>
 
 </body>

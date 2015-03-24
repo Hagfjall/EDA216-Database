@@ -171,6 +171,19 @@ class Database {
 		$result = $this->executeUpdate($sql, array($userId, $intervalStart, $intervalEnd));
 		return $result; 
 	}
+
+	public function freezerEntranceScanner($palletId){
+		$sql = "UPDATE Pallets SET state = 'freezer' where palletId = ?";
+		$result = $this->executeUpdate($sql, array($palletId));
+		return $result;
+	}
+
+		public function freezerExitScanner($palletId){
+		$sql = "UPDATE Pallets SET state = 'exited' where palletId = ?";
+		$result = $this->executeUpdate($sql, array($palletId));
+		return $result;
+	}
+
 }
 
 ?>
