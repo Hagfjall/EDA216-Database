@@ -26,10 +26,9 @@
 <p>
 <b>Production Time Period:</b>
 <p>
-  From:
   <input type="datetime-local" value ="2015-01-01T11:42:13.510" name="intervalStart">
   To:
-  <input type="datetime-local" value ="2015-10-02T11:42:13.510" name="intervalEnd">
+  <input type="datetime-local" value ="2015-03-23T22:39:23.510" name="intervalEnd">
 <p>
 		<input type=submit value="Block products!">
 	</form>
