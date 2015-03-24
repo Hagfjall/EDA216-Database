@@ -21,6 +21,6 @@
 <i>It is unclear whether this functionality actually works, at this point. It will be easier to see when functionality for searching is implemented.</i>
 	<p>
 <a href="palletMaintenance.php">Back to Pallet Maintenance</a>
-	
+
 </body>
 </html>
