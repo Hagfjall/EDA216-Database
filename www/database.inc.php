@@ -200,7 +200,6 @@ class Database {
 		$sql = "select * from Pallets where palletId = ?";
 		$result = $this->executeQuery($sql, array($palletId));
 		return $result;
-
 	}
 
 	public function getPalletsWithProduct($productName){
@@ -217,6 +216,15 @@ class Database {
 	public function getPalletsToCustomer($customerName) {
 		$sql = "SELECT palletId FROM PalletDeliveries NATURAL JOIN Orders NATURAL JOIN Customers WHERE customerName = ?";
 		return $this->executeQuery($sql, array($customerName));
+	}
+
+	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
+		$intervalStart = $this->getDateTime($intervalStart);
+		$intervalEnd = $this->getDateTime($intervalEnd);
+		$sql = "SELECT * FROM Pallets WHERE productionDateTime >= ? AND productionDateTime <= ?";
+		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
+		return $result;
+
 	}
 
 }
