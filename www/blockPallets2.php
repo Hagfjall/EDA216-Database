@@ -4,11 +4,14 @@
 	$db = $_SESSION['db'];
 	$product = $_REQUEST['product'];
 	$_SESSION['product'] = $product;
+print($_REQUEST['intervalStart']);
+print($_REQUEST['intervalEnd']);
 ?>
 
 <html>
 <head><title>KK Sweden AB - Block Pallets</title><head>
 <body><h1>Block Pallets(s)</h1>
+
 	<p>
 	Chose time period:
 	<p>

@@ -9,7 +9,6 @@
 
 	}
 	$db->closeConnection();
-
 ?>
 <html>
 <head><title>KK Sweden AB - Block Pallets</title><head>
@@ -18,6 +17,7 @@
 	<p>
 	<b>Product to block</b>
 	<p>
+
 		<form method=post action="blockPallets2.php">
 		<select name="product" size=10>
 		<?php
@@ -28,20 +28,15 @@
 			}
 		?>
 		</select>
-		<input type=submit value="Choose product">
-	</form>
 <p>
 <b>Time period:</b>
 <p>
-<form>
   From:
-  <input type="datetime-local" name="bday">
-</form>
-<form>
+  <input type="datetime-local" name="intervalStart">
   To:
-  <input type="datetime-local" name="bday">
-</form>
-
-
+  <input type="datetime-local" name="intervalEnd">
+<p>
+		<input type=submit value="Block products!">
+	</form>
 </body>
 </html>
