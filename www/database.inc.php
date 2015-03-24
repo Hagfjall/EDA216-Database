@@ -210,20 +210,6 @@ class Database {
 		return $this->executeQuery($sql, array($customerName));
 	}
 
-	//TODO Check somewhere that the pallet actually exsits!
-	public function getOrdersWithProduct($palletId){
-		$sql = "SELECT productName from Pallets where palletId = ?";
-		$productName = $this->executeQuery($sql, array($palletId));
-		$sql = "SELECT orderId FROM Orders NATURAL JOIN ProductOrders WHERE productName = ? 
-		AND nbrOfPallets > (SELECT count(*) FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId)";
-
-		return $this->executeQuery($sql, array($productName, $productName));
-	}
-
-	public function deliverPallet($palletId, $orderId){
-		$sql = "INSERT INTO PalletDeliveries VALUES(?, ?, NOW())";
-		$this->executeUpdate($sql, array($palletId, $orderId));
-	}
 	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
 		$intervalStart = $this->getDateTime($intervalStart);
 		$intervalEnd = $this->getDateTime($intervalEnd);
@@ -231,17 +217,14 @@ class Database {
 		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 		return $result;
 
-
 	}
 	public function getPalletsByDeliveryDateTime($intervalStart, $intervalEnd){
 		$intervalStart = $this->getDateTime($intervalStart);
 		$intervalEnd = $this->getDateTime($intervalEnd);
-		$sql = "SELECT * FROM Pallets WHERE productionDateTime >= ? AND productionDateTime <= ?";
+		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders WHERE deliveryDateTime >= ? AND deliveryDateTime <= ?";
 		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 		return $result;
-
 	}
-
 
 }
 

@@ -68,7 +68,7 @@
  	 To:
  	<input type="datetime-local" value ="2015-03-23T22:39:23.510" name="productionIntervalEnd">
 	<input type=submit value="Search by production date">
-	<form>
+</form>
 <hr>
 <p>
 	<t><Strong>Search by delivery date: </strong> <br>
@@ -78,7 +78,7 @@
  	 To:
  	<input type="datetime-local" value ="2015-03-23T22:39:23.510" name="deliveryIntervalEnd">
 	<input type=submit value="Search by delivery date">
-	<form>
+</form>
 <hr>
 
 
