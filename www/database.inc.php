@@ -191,6 +191,12 @@ class Database {
 
 	}
 
+	public function getPalletsWithProduct($productName){
+		$sql = "select * from Pallets where productName = ?";
+		$result = $this->executeQuery($sql, array($productName));
+		return $result;
+	}
+
 }
 
 ?>
