@@ -146,9 +146,6 @@ class Database {
 			$this->executeUpdate($insertQuery, array($cookieType));
 		}
 		$this->conn->commit();
-
-		
-
 	}
 
 	public function getProducts(){
@@ -167,6 +164,12 @@ class Database {
 		$sql = "SELECT palletId, productionDateTime AS prodDate, state, blocked, productName FROM Pallets";
 		$result = $this->executeQuery($sql);
 		return $result;
+	}
+
+	public function blockPallets($product, $intervalStart, $intervalEnd) {
+		$sql = "UPDATE Pallets SET blocked = true WHERE productName = ? AND productionDateTime >= ? AND productionDateTime <= ?";
+		$result = $this->executeUpdate($sql, array($userId, $intervalStart, $intervalEnd));
+		return $result; 
 	}
 }
 

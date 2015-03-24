@@ -3,23 +3,25 @@
 	session_start();
 	$db = $_SESSION['db'];
 	$product = $_REQUEST['product'];
-	$_SESSION['product'] = $product;
-print($_REQUEST['intervalStart']);
-print($_REQUEST['intervalEnd']);
+	$intervalStart = $_REQUEST['intervalStart'];
+	$intervalEnd = $_REQUEST['intervalEnd'];
+	$db->openConnection();
+	$nbrOfBlockedPallets = $db->blockPallets($product, $intervalStart, $intervalEnd);
+	$db->closeConnection();
+
 ?>
 
+
 <html>
-<head><title>KK Sweden AB - Block Pallets</title><head>
-<body><h1>Block Pallets(s)</h1>
-
+<head><title>KK Sweden AB - Pallets Blocked</title><head>
+<body><h1>Blocked Pallets</h1>
 	<p>
-	Chose time period:
+	<?php
+	print($nbrOfBlockedPallets);
+	print(" pallets blocked");
+	?>
 	<p>
-		<form method="post" action="blockPallets3.php">
-		    <t>Enter time period (YYYY-MM-DD HH:MM:SS YYYY-MM-DD HH:MM:SS):<br>
-
-		    <input type="text" size="40" name="interval">
-		    <input type="submit" value="Block">
-		</form>
+<a href="palletMaintenance.php">Back to Pallet Maintenance</a>
+	
 </body>
 </html>

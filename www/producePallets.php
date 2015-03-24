@@ -27,7 +27,7 @@ $(document).ready(function(){
 					$("p#res").append(" pallet of ");		
 					$("p#res").append($("#type").val());
 				}
-				$("p#res").append("s has been produced </br>");	
+				$("p#res").append("s have been produced </br>");	
 			});
 		}
 	});
