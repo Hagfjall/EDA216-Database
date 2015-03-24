@@ -144,7 +144,7 @@ class Database {
 		$result = $this->executeQuery($sql, array($cookieType));
 
 		$updateQuery = "UPDATE RawMaterials SET totalQuantity = totalQuantity - ? WHERE rawMaterialName = ?";
-		$insertQuery = "INSERT INTO Pallets VALUES (null, default, 'production', null, ?)";
+		$insertQuery = "INSERT INTO Pallets VALUES (null, default, 'freezer', false, ?)";
 		$this->conn->beginTransaction();
 		foreach ($result as $ingr) {
 			$totAmount = 54 * $ingr['quantity'] * $amount; //FÖRTYDLIGA SENARE
@@ -184,16 +184,8 @@ class Database {
 	}
 
 
-	public function freezerEntranceScanner($palletId){
-		$sql = "UPDATE Pallets SET state = 'freezer' where palletId = ?";
-		$result = $this->executeUpdate($sql, array($palletId));
-		return $result;
-	}
-
 		public function freezerExitScanner($palletId){
-		$sql = "UPDATE Pallets SET state = 'delivered' where palletId = ?";
-		$result = $this->executeUpdate($sql, array($palletId));
-		return $result;
+		
 	}
 
 	public function getPalletInfo($palletId){
