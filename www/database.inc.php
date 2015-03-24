@@ -179,7 +179,7 @@ class Database {
 	}
 
 		public function freezerExitScanner($palletId){
-		$sql = "UPDATE Pallets SET state = 'exited' where palletId = ?";
+		$sql = "UPDATE Pallets SET state = 'delivered' where palletId = ?";
 		$result = $this->executeUpdate($sql, array($palletId));
 		return $result;
 	}
