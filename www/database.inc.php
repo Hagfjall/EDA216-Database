@@ -147,7 +147,7 @@ class Database {
 		$insertQuery = "INSERT INTO Pallets VALUES (null, default, 'production', null, ?)";
 		$this->conn->beginTransaction();
 		foreach ($result as $ingr) {
-			$totAmount = 5400 * $ingr['quantity'] * $amount; //FÖRTYDLIGA SENARE
+			$totAmount = 54 * $ingr['quantity'] * $amount; //FÖRTYDLIGA SENARE
 			$this->executeUpdate($updateQuery, array($totAmount, $ingr['name']));
 		}
 		for ($i = 0; $i < $amount; $i = $i + 1) {
@@ -201,6 +201,12 @@ class Database {
 		$result = $this->executeQuery($sql, array($palletId));
 		return $result;
 
+	}
+
+	public function getPalletsWithProduct($productName){
+		$sql = "select * from Pallets where productName = ?";
+		$result = $this->executeQuery($sql, array($productName));
+		return $result;
 	}
 
 }

@@ -27,7 +27,7 @@
 
 <p>
 	<t><Strong>Search by product: </strong> <br>
-	<form method=post action="searchByCustomer.php">
+	<form method=post action="searchByProduct.php">
 		<select name="product" size=10>
 		<?php
 			$first = true;
