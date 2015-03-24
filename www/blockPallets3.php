@@ -5,8 +5,8 @@
 	$ingredient = $_SESSION['ingredient'];
 	$interval = $_REQUEST['interval'];
 	$array = preg_split('/\s+/',$interval);
-	$startDate = $array[0] + " " +$array[1];
-	$endDate = $array[2] +" " +$array[3];
+	$startDate = $array[0]." " .$array[1];
+	$endDate = $array[2]." ".$array[3];
 	//$nbrOfBlocketPallets = $db->blockPallets($ingredient,$startDate,$endDate);
 	print($startDate);
 	print($endDate);
