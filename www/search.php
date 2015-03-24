@@ -70,6 +70,7 @@
 	<input type=submit value="Search by production date">
 </form>
 <hr>
+
 <p>
 	<t><Strong>Search by delivery date: </strong> <br>
 	<form method=post action="searchByDeliveryDateTime.php">
@@ -78,6 +79,12 @@
  	 To:
  	<input type="datetime-local" value ="2015-03-23T22:39:23.510" name="deliveryIntervalEnd">
 	<input type=submit value="Search by delivery date">
+</form>
+<hr>
+<p>
+	<t><Strong>Search for blocked pallets: </strong> <br>
+	<form method=post action="searchByDeliveryDateTime.php">
+	<input type=submit value="Show Blocked Pallets">
 </form>
 <hr>
 
