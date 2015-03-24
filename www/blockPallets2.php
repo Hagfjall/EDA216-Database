@@ -8,10 +8,7 @@
 	$db->openConnection();
 	$nbrOfBlockedPallets = $db->blockPallets($product, $intervalStart, $intervalEnd);
 	$db->closeConnection();
-
 ?>
-
-
 <html>
 <head><title>KK Sweden AB - Pallets Blocked</title><head>
 <body><h1>Blocked Pallets</h1>

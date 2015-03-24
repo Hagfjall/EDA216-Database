@@ -2,7 +2,6 @@
 	require_once('database.inc.php');
 	session_start();
 	$db = $_SESSION['db'];
-
 	$query = $_REQUEST['query']; // Where does thos come from? Where is request attribute 'query' set?
 	$db->openConnection();
 	$products = $db->getProducts();
@@ -18,7 +17,6 @@
 	<p>
 	<b>Product to block</b>
 	<p>
-
 		<form method=post action="blockPallets2.php">
 		<select name="product" size=10>
 		<?php
@@ -30,7 +28,7 @@
 		?>
 		</select>
 <p>
-<b>Time period:</b>
+<b>Production Time Period:</b>
 <p>
   From:
   <input type="datetime-local" name="intervalStart">
