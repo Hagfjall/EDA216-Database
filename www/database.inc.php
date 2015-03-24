@@ -211,6 +211,20 @@ class Database {
 		return $this->executeQuery($sql, array($customerName));
 	}
 
+	public function getOrdersWithProduct($palletId){
+		$sql = "SELECT productName from Pallets where palletId = ?";
+		$productName = $this->executeQuery($sql, array($palletId));
+		$sql = "SELECT orderId FROM Orders NATURAL JOIN ProductOrders WHERE productName = ? 
+		AND nbrOfPallets > (SELECT count(*) FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId)";
+
+		return $this->executeQuery($sql, array($productName, $productName));
+	}
+
+	public function deliverPallet($palletId, $orderId){
+		$sql = "INSERT INTO PalletDeliveries VALUES(?, ?, NOW())";
+		$this->executeUpdate($sql, array($palletId, $orderId));
+	}
+
 }
 
 ?>

@@ -91,7 +91,8 @@ insert into Ingredients(ingredientName, productName, quantity) values('Icing sug
 insert into Ingredients(ingredientName, productName, quantity) values('Roasted, chopped nuts', 'Nut Ring', 225);
 insert into Customers(customerName, address, username, password) values('Finkakor AB', 'Helsingborg', 'finkakor', 'password');
 insert into Orders(desiredDeliveryDate, customerName) values('2000-01-01', 'Finkakor AB');
-insert into Pallets(palletId) values(1);
+insert into Pallets(palletId) values(1);o
 insert into PalletDeliveries(palletId, orderId, deliveryDate) values(2, 1, '2000-01-02');
+insert into ProductOrders(orderId, productName, nbrOfPallets) values(2, 'Nut Rings', 1000);	
 
 
