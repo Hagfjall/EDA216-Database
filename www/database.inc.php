@@ -184,6 +184,13 @@ class Database {
 		return $result;
 	}
 
+	public function getPalletInfo($palletId){
+		$sql = "select * from Pallets where palletId = ?";
+		$result = $this->executeQuery($sql, array($palletId));
+		return $result;
+
+	}
+
 }
 
 ?>

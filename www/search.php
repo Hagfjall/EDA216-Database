@@ -20,10 +20,8 @@
 <p>
 <form method="post" action="searchByPalletId.php">
     <t><strong>Search by Pallet Id: </strong><br>
-    <input type="text" size="20" name="Barcode scanner freezer-entrance">
-    <input type="submit" value="Scan">
-    <!-- Use different values for different barcode-readers -->
-    <input type="hidden" value="freezer-entrance" name="barcodeReader">
+    <input type="text" size="20" name="palletId">
+    <input type="submit" value="Search">
 </form>
 <hr>
 
