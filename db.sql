@@ -1,4 +1,4 @@
-ct-- Delete the tables if they exist. Set foreign_key_checks = 0 to
+-- Delete the tables if they exist. Set foreign_key_checks = 0 to
 -- disable foreign key checks, so the tables may be dropped in
 -- arbitrary order.
 set foreign_key_checks = 0;
@@ -56,7 +56,7 @@ create table Pallets (
 palletId int auto_increment,
 productionDateTime datetime not null default NOW(),
 state varchar(30),
-blocked bool,
+blocked bool default false,
 productName varchar(30),
 primary key (palletId),
 foreign key (productName) references Products(productName)
@@ -91,7 +91,10 @@ insert into Ingredients(ingredientName, productName, quantity) values('Icing sug
 insert into Ingredients(ingredientName, productName, quantity) values('Roasted, chopped nuts', 'Nut Ring', 225);
 insert into Customers(customerName, address, username, password) values('Finkakor AB', 'Helsingborg', 'finkakor', 'password');
 insert into Orders(desiredDeliveryDate, customerName) values('2000-01-01', 'Finkakor AB');
-insert into Pallets(palletId) values(1);
+insert into Pallets(state, productName) values('freezer', 'Nut Ring');
+insert into Pallets(state, productName) values('freezer', 'Nut Ring');
+insert into Pallets(state, productName) values('freezer', 'Nut Ring');
+insert into Pallets(state, productName) values('freezer', 'Nut Ring');
+insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into PalletDeliveries(palletId, orderId, deliveryDate) values(2, 1, '2000-01-02');
-
-
+insert into ProductOrders(orderId, productName, nbrOfPallets) values(1, 'Nut Ring', 1000);
