@@ -4,6 +4,7 @@
 	$db = $_SESSION['db'];
 	$db->openConnection();
 	$products = $db->getProducts();
+	$customers = $db->getCustomers();
 	$db->closeConnection();
 ?>
 
@@ -44,7 +45,19 @@
 
 <p>
 	<t><Strong>Search by customer: </strong> <br>
-
+	<form method=post action="searchByCustomer.php">
+		<select name="customer" size=10>
+		<?php
+			$first = true;
+			foreach ($customers as $customer) {
+					print "<option>";
+					print $customer['customerName'];
+			}
+		?>
+		</select>
+<br>
+		<input type=submit value="Search by product">
+	</form>
 <hr>
 
 <p>

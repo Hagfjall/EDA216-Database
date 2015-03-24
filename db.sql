@@ -1,4 +1,4 @@
--- Delete the tables if they exist. Set foreign_key_checks = 0 to
+ct-- Delete the tables if they exist. Set foreign_key_checks = 0 to
 -- disable foreign key checks, so the tables may be dropped in
 -- arbitrary order.
 set foreign_key_checks = 0;
@@ -92,5 +92,6 @@ insert into Ingredients(ingredientName, productName, quantity) values('Roasted, 
 insert into Customers(customerName, address, username, password) values('Finkakor AB', 'Helsingborg', 'finkakor', 'password');
 insert into Orders(desiredDeliveryDate, customerName) values('2000-01-01', 'Finkakor AB');
 insert into Pallets(palletId) values(1);
+insert into PalletDeliveries(palletId, orderId, deliveryDate) values(2, 1, '2000-01-02');
 
 

@@ -197,6 +197,16 @@ class Database {
 		return $result;
 	}
 
+	public function getCustomers(){
+		$sql = "SELECT customerName FROM Customers";
+		return $this->executeQuery($sql);
+	}
+
+	public function getPalletsToCustomer($customerName) {
+		$sql = "SELECT palletId FROM PalletDeliveries NATURAL JOIN Orders NATURAL JOIN Customers WHERE customerName = ?";
+		return $this->executeQuery($sql, array($customerName));
+	}
+
 }
 
 ?>
