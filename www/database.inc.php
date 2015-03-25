@@ -211,13 +211,23 @@ class Database {
 	}
 
 	//TODO Check somewhere that the pallet actually exsits!
+	//Något är fel i den sista parentesen, det som returneras där är ju flera värden... Det man söker är ju för varje specifik order
+	//om alla pallar har levererats
+
+	//LÖSNING: Skapa en view med för varje orderId hur många pallar av den här produkten som har levererats
+
 	public function getOrdersWithProduct($palletId){
 		$sql = "SELECT productName from Pallets where palletId = ?";
 		$productName = $this->executeQuery($sql, array($palletId));
-		$sql = "SELECT orderId FROM Orders NATURAL JOIN ProductOrders WHERE productName = ? 
-		AND nbrOfPallets > (SELECT count(*) FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId)";
 
-		return $this->executeQuery($sql, array($productName, $productName));
+		$sql = "CREATE OR REPLACE view as PalletsDeliveredToOrderId AS SELECT orderId, count(*) nbrDelivered 
+		FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId";
+		$this->executeUpdate($sql, $productName[0]);
+		
+		$sql = "SELECT orderId FROM Orders, ProductOrders, PalletsDeliveredToOrderId where Orders.palletId = ProductOrders.palletId 
+		AND productName = ? AND nbrOfPallets > nbrDelivered";
+
+		return $this->executeQuery($sql, array($productName[0], $productName[0]));
 	}
 
 	public function deliverPallet($palletId, $orderId){
