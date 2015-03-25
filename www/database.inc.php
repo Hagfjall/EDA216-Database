@@ -211,6 +211,31 @@ class Database {
 		return $this->executeQuery($sql, array($customerName));
 	}
 
+	//TODO Check somewhere that the pallet actually exsits!
+	//Något är fel i den sista parentesen, det som returneras där är ju flera värden... Det man söker är ju för varje specifik order
+	//om alla pallar har levererats
+
+	//LÖSNING: Skapa en view med för varje orderId hur många pallar av den här produkten som har levererats
+
+	public function getOrdersWithProduct($palletId){
+		$sql = "SELECT productName from Pallets where palletId = ?";
+		$productName = $this->executeQuery($sql, array($palletId));
+
+		$sql = "CREATE OR REPLACE view as PalletsDeliveredToOrderId AS SELECT orderId, count(*) nbrDelivered 
+		FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId";
+		$this->executeUpdate($sql, array($productName[0]));
+		
+		$sql = "SELECT orderId FROM Orders, ProductOrders, PalletsDeliveredToOrderId where Orders.palletId = ProductOrders.palletId 
+		AND productName = ? AND nbrOfPallets > nbrDelivered";
+
+		return $this->executeQuery($sql, array($productName[0], $productName[0]));
+	}
+
+	public function deliverPallet($palletId, $orderId){
+		$sql = "INSERT INTO PalletDeliveries VALUES(?, ?, NOW())";
+		$this->executeUpdate($sql, array($palletId, $orderId));
+	}
+
 	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
 		$intervalStart = $this->convertDateTime($intervalStart);
 		$intervalEnd = $this->convertDateTime($intervalEnd);
