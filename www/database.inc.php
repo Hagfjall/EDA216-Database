@@ -177,7 +177,8 @@ class Database {
 	public function blockPallets($product, $intervalStart, $intervalEnd) {
 		$intervalStart = $this->convertDateTime($intervalStart);
 		$intervalEnd = $this->convertDateTime($intervalEnd);
-		$sql = "UPDATE Pallets SET blocked = true  WHERE productName = ? AND productionDateTime >= ? AND productionDateTime <= ?";
+		$sql = "UPDATE Pallets SET blocked = true  WHERE productName = ?
+		AND productionDateTime >= ? AND productionDateTime <= ? AND state <> 'delivered'";
 		$result = $this->executeUpdate($sql, array($product, $intervalStart, $intervalEnd));
 		return $result;
 	}
@@ -221,11 +222,11 @@ class Database {
 		$sql = "SELECT productName from Pallets where palletId = ?";
 		$productName = $this->executeQuery($sql, array($palletId));
 
-		$sql = "CREATE OR REPLACE view as PalletsDeliveredToOrderId AS SELECT orderId, count(*) nbrDelivered 
+		$sql = "CREATE OR REPLACE view as PalletsDeliveredToOrderId AS SELECT orderId, count(*) nbrDelivered
 		FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId";
 		$this->executeUpdate($sql, array($productName[0]));
-		
-		$sql = "SELECT orderId FROM Orders, ProductOrders, PalletsDeliveredToOrderId where Orders.palletId = ProductOrders.palletId 
+
+		$sql = "SELECT orderId FROM Orders, ProductOrders, PalletsDeliveredToOrderId where Orders.palletId = ProductOrders.palletId
 		AND productName = ? AND nbrOfPallets > nbrDelivered";
 
 		return $this->executeQuery($sql, array($productName[0], $productName[0]));
@@ -257,7 +258,6 @@ class Database {
 		$result = $this->executeQuery($sql);
 		return $result;
 	}
-
 }
 
 ?>
