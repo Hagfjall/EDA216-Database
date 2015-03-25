@@ -65,7 +65,7 @@ foreign key (productName) references Products(productName)
 create table PalletDeliveries (
 palletId int,
 orderId int,
-deliveryDate date,
+deliveryDateTime datetime,
 primary key (palletId, orderId),
 foreign key (palletId) references Pallets(palletId),
 foreign key (orderId) references Orders(orderId)
@@ -96,5 +96,5 @@ insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
-insert into PalletDeliveries(palletId, orderId, deliveryDate) values(2, 1, '2000-01-02');
-insert into ProductOrders(orderId, productName, nbrOfPallets) values(2, 'Nut Rings', 1000);
+insert into PalletDeliveries(palletId, orderId, deliveryDateTime) values(2, 1, '2015-03-23 22:00:00');
+insert into ProductOrders(orderId, productName, nbrOfPallets) values(1, 'Nut Ring', 1000);

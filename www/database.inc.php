@@ -1,6 +1,6 @@
 <?php
 /*
- * Class Database: interface to the movie database from PHP.
+ * Class Database: interface to the movie database FROM PHP.
  *
  * You must:
  *
@@ -65,7 +65,7 @@ class Database {
 	}
 
 	/**
-	 * Execute a database query (select).
+	 * Execute a database query (SELECT).
 	 *
 	 * @param $query The query string (SQL), with ? placeholders for parameters
 	 * @param $param Array with parameters
@@ -106,9 +106,9 @@ class Database {
 	}
 
 	/**
-	* returns YYYY-MM-DD HH:MM:SS from YYYY-MM-DDTHH:MM:SS.msmsms
+	* returns YYYY-MM-DD HH:MM:SS FROM YYYY-MM-DDTHH:MM:SS.msmsms
 	*/
-	private function getDateTime($dateTimeFromHTML){
+	private function convertDateTime($dateTimeFromHTML){
 		$ret = substr($dateTimeFromHTML,0,10)." ".substr($dateTimeFromHTML,11,8);
 		return $ret;
 	}
@@ -121,7 +121,7 @@ class Database {
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId) {
-		$sql = "select userId from Users where userId = ?";
+		$sql = "SELECT userId FROM Users  WHERE userId = ?";
 		$result = $this->executeQuery($sql, array($userId));
 		return count($result) == 1;
 	}
@@ -140,10 +140,10 @@ class Database {
 
 
 	public function producePallets($cookieType, $amount) {
-		$sql = "SELECT ingredientName AS name, quantity FROM Ingredients WHERE productName = ?";
+		$sql = "SELECT ingredientName AS name, quantity FROM Ingredients  WHERE productName = ?";
 		$result = $this->executeQuery($sql, array($cookieType));
 
-		$updateQuery = "UPDATE RawMaterials SET totalQuantity = totalQuantity - ? WHERE rawMaterialName = ?";
+		$updateQuery = "UPDATE RawMaterials SET totalQuantity = totalQuantity - ?  WHERE rawMaterialName = ?";
 		$insertQuery = "INSERT INTO Pallets VALUES (null, default, 'freezer', false, ?)";
 		$this->conn->beginTransaction();
 		foreach ($result as $ingr) {
@@ -174,28 +174,27 @@ class Database {
 		return $result;
 	}
 
-//2015-01-01T11:42:13.510
 	public function blockPallets($product, $intervalStart, $intervalEnd) {
-		$intervalStart = $this->getDateTime($intervalStart);
-		$intervalEnd = $this->getDateTime($intervalEnd);
-		$sql = "UPDATE Pallets SET blocked = true WHERE productName = ? AND productionDateTime >= ? AND productionDateTime <= ?";
+		$intervalStart = $this->convertDateTime($intervalStart);
+		$intervalEnd = $this->convertDateTime($intervalEnd);
+		$sql = "UPDATE Pallets SET blocked = true  WHERE productName = ? AND productionDateTime >= ? AND productionDateTime <= ?";
 		$result = $this->executeUpdate($sql, array($product, $intervalStart, $intervalEnd));
 		return $result;
 	}
 
 
-		public function freezerExitScanner($palletId){
-		
+	public function freezerExitScanner($palletId){
+
 	}
 
 	public function getPalletInfo($palletId){
-		$sql = "select * from Pallets where palletId = ?";
+		$sql = "SELECT * FROM Pallets  WHERE palletId = ?";
 		$result = $this->executeQuery($sql, array($palletId));
 		return $result;
 	}
 
 	public function getPalletsWithProduct($productName){
-		$sql = "select * from Pallets where productName = ?";
+		$sql = "SELECT * FROM Pallets  WHERE productName = ?";
 		$result = $this->executeQuery($sql, array($productName));
 		return $result;
 	}
@@ -206,7 +205,7 @@ class Database {
 	}
 
 	public function getPalletsToCustomer($customerName) {
-		$sql = "SELECT palletId FROM PalletDeliveries NATURAL JOIN Orders NATURAL JOIN Customers WHERE customerName = ?";
+		$sql = "SELECT palletId FROM PalletDeliveries NATURAL JOIN Orders NATURAL JOIN Customers  WHERE customerName = ?";
 		return $this->executeQuery($sql, array($customerName));
 	}
 
@@ -234,14 +233,27 @@ class Database {
 		$sql = "INSERT INTO PalletDeliveries VALUES(?, ?, NOW())";
 		$this->executeUpdate($sql, array($palletId, $orderId));
 	}
+
 	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
-		$intervalStart = $this->getDateTime($intervalStart);
-		$intervalEnd = $this->getDateTime($intervalEnd);
-		$sql = "SELECT * FROM Pallets WHERE productionDateTime >= ? AND productionDateTime <= ?";
+		$intervalStart = $this->convertDateTime($intervalStart);
+		$intervalEnd = $this->convertDateTime($intervalEnd);
+		$sql = "SELECT * FROM Pallets  WHERE productionDateTime >= ? AND productionDateTime <= ? ORDER BY productionDateTime";
 		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 		return $result;
 
+	}
+	public function getPalletsByDeliveryDateTime($intervalStart, $intervalEnd){
+		$intervalStart = $this->convertDateTime($intervalStart);
+		$intervalEnd = $this->convertDateTime($intervalEnd);
+		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders  WHERE deliveryDateTime >= ? AND deliveryDateTime <= ? ORDER BY deliveryDateTime";
+		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
+		return $result;
+	}
 
+	public function getBlockedPallets(){
+		$sql = "SELECT palletId, productionDateTime, state, productName FROM Pallets  WHERE blocked is true ORDER BY productionDateTime";
+		$result = $this->executeQuery($sql);
+		return $result;
 	}
 
 }
