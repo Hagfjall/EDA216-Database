@@ -91,10 +91,17 @@ insert into Ingredients(ingredientName, productName, quantity) values('Icing sug
 insert into Ingredients(ingredientName, productName, quantity) values('Roasted, chopped nuts', 'Nut Ring', 225);
 insert into Customers(customerName, address, username, password) values('Finkakor AB', 'Helsingborg', 'finkakor', 'password');
 insert into Orders(desiredDeliveryDate, customerName) values('2000-01-01', 'Finkakor AB');
+insert into Orders(desiredDeliveryDate, customerName) values('2015-04-01', 'Finkakor AB');
+insert into Orders(desiredDeliveryDate, customerName) values('2015-05-01', 'Finkakor AB');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into Pallets(state, productName) values('freezer', 'Nut Ring');
 insert into PalletDeliveries(palletId, orderId, deliveryDateTime) values(2, 1, '2015-03-23 22:00:00');
+insert into PalletDeliveries(palletId, orderId, deliveryDateTime) values(3, 2, '2015-03-23 22:00:00');
+insert into PalletDeliveries(palletId, orderId, deliveryDateTime) values(4, 2, '2015-03-24 22:00:00');
+insert into PalletDeliveries(palletId, orderId, deliveryDateTime) values(5, 2, '2015-03-25 22:00:00');
 insert into ProductOrders(orderId, productName, nbrOfPallets) values(1, 'Nut Ring', 1000);
+insert into ProductOrders(orderId, productName, nbrOfPallets) values(2, 'Nut Ring', 3);
+insert into ProductOrders(orderId, productName, nbrOfPallets) values(3, 'Nut Ring', 2);

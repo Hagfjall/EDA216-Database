@@ -26,3 +26,7 @@ Create pallets:
 
 Diskutera:
   Search by customer doesn't show any info about deliveryDate or things like that
+
+
+CREATE OR REPLACE view Deliveries AS SELECT * FROM Orders NATURAL JOIN ProductOrders;
+CREATE OR REPLACE view NbrOfDeliveries AS SELECT Deliveries.orderId, desiredDeliveryDate, customerName, productName, nbrOfPallets, nbrDelivered FROM Deliveries LEFT OUTER JOIN PalletsDeliveredToOrderId ON PalletsDeliveredToOrderId.orderId=Deliveries.orderId;

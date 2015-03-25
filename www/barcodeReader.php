@@ -26,7 +26,7 @@
 
 			foreach ($orders as $order) {
 					print "<option>";
-					print $order['orderId'];
+					print "Order: ".$order['orderId']." to ".$order['customerName'];
 			}
 		?>
 		</select>

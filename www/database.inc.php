@@ -220,7 +220,7 @@ class Database {
 
 	public function getOrdersWithProduct($palletId){
 		$sql = "SELECT productName FROM Pallets WHERE palletId = ?
-		AND blocked is false";
+		AND blocked is false AND state = 'freezer'";
 		$productName = $this->executeQuery($sql, array($palletId));
 		$productName = $productName[0]['productName'];
 
@@ -229,9 +229,19 @@ class Database {
 		WHERE productName = ? GROUP BY orderId";
 		$this->executeUpdate($sql, array($productName));
 
-		$sql = "SELECT orderId FROM Orders NATURAL JOIN ProductOrders NATURAL JOIN
-		PalletsDeliveredToOrderId where productName = ?
-		AND nbrOfPallets > nbrDelivered";
+		$sql = "CREATE OR REPLACE view Deliveries AS SELECT * FROM Orders
+		NATURAL JOIN ProductOrders WHERE productName = ?";
+		$this->executeUpdate($sql, array($productName));
+
+		$sql = "CREATE OR REPLACE view NbrOfDeliveries
+		AS SELECT Deliveries.orderId, desiredDeliveryDate, customerName,
+		productName, nbrOfPallets, nbrDelivered
+		FROM Deliveries LEFT OUTER JOIN PalletsDeliveredToOrderId
+		ON PalletsDeliveredToOrderId.orderId=Deliveries.orderId";
+		$this->executeUpdate($sql);
+
+		$sql = "SELECT orderId,customerName FROM NbrOfDeliveries
+		WHERE nbrOfPallets > nbrDelivered OR nbrDelivered is NULL";
 		return $this->executeQuery($sql, array($productName));
 
 	}
