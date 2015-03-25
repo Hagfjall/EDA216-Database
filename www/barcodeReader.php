@@ -16,7 +16,7 @@
 <body>
 	<p>
 		<?php
-		 print $orders[0];
+		 //print $orders[0];
 		?>
 	</p>
 <form method=post action="deliverPallet.php">

@@ -219,17 +219,21 @@ class Database {
 	//LÖSNING: Skapa en view med för varje orderId hur många pallar av den här produkten som har levererats
 
 	public function getOrdersWithProduct($palletId){
-		$sql = "SELECT productName from Pallets where palletId = ?";
+		$sql = "SELECT productName FROM Pallets WHERE palletId = ?
+		AND blocked is false";
 		$productName = $this->executeQuery($sql, array($palletId));
+		$productName = $productName[0]['productName'];
 
-		$sql = "CREATE OR REPLACE view as PalletsDeliveredToOrderId AS SELECT orderId, count(*) nbrDelivered
-		FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId";
-		$this->executeUpdate($sql, array($productName[0]));
+		$sql = "CREATE OR REPLACE view PalletsDeliveredToOrderId AS SELECT orderId,
+		 count(*) nbrDelivered FROM PalletDeliveries NATURAL JOIN Pallets
+		WHERE productName = ? GROUP BY orderId";
+		$this->executeUpdate($sql, array($productName));
 
-		$sql = "SELECT orderId FROM Orders, ProductOrders, PalletsDeliveredToOrderId where Orders.palletId = ProductOrders.palletId
-		AND productName = ? AND nbrOfPallets > nbrDelivered";
+		$sql = "SELECT orderId FROM Orders NATURAL JOIN ProductOrders NATURAL JOIN
+		PalletsDeliveredToOrderId where productName = ?
+		AND nbrOfPallets > nbrDelivered";
+		return $this->executeQuery($sql, array($productName));
 
-		return $this->executeQuery($sql, array($productName[0], $productName[0]));
 	}
 
 	public function deliverPallet($palletId, $orderId){
@@ -240,7 +244,8 @@ class Database {
 	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
 		$intervalStart = $this->convertDateTime($intervalStart);
 		$intervalEnd = $this->convertDateTime($intervalEnd);
-		$sql = "SELECT * FROM Pallets  WHERE productionDateTime >= ? AND productionDateTime <= ? ORDER BY productionDateTime";
+		$sql = "SELECT * FROM Pallets  WHERE productionDateTime >= ?
+		AND productionDateTime <= ? ORDER BY productionDateTime";
 		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 		return $result;
 
@@ -248,13 +253,15 @@ class Database {
 	public function getPalletsByDeliveryDateTime($intervalStart, $intervalEnd){
 		$intervalStart = $this->convertDateTime($intervalStart);
 		$intervalEnd = $this->convertDateTime($intervalEnd);
-		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders  WHERE deliveryDateTime >= ? AND deliveryDateTime <= ? ORDER BY deliveryDateTime";
+		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders
+		WHERE deliveryDateTime >= ? AND deliveryDateTime <= ? ORDER BY deliveryDateTime";
 		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 		return $result;
 	}
 
 	public function getBlockedPallets(){
-		$sql = "SELECT palletId, productionDateTime, state, productName FROM Pallets  WHERE blocked is true ORDER BY productionDateTime";
+		$sql = "SELECT palletId, productionDateTime, state, productName FROM Pallets
+		  WHERE blocked is true ORDER BY productionDateTime";
 		$result = $this->executeQuery($sql);
 		return $result;
 	}
