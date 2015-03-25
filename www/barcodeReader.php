@@ -22,11 +22,9 @@
 <form method=post action="deliverPallet.php">
 		<select name="orderId" size=10>
 		<?php
-			$first = true;
-
 			foreach ($orders as $order) {
 					print "<option>";
-					print "Order: ".$order['orderId']." to ".$order['customerName'];
+					print $order['orderId'];
 			}
 		?>
 		</select>

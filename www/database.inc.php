@@ -218,6 +218,10 @@ class Database {
 
 	//LÖSNING: Skapa en view med för varje orderId hur många pallar av den här produkten som har levererats
 
+	/**
+	* Creates a lot of views right now but that's just to be able to do all the joins correctly
+	*/
+
 	public function getOrdersWithProduct($palletId){
 		$sql = "SELECT productName FROM Pallets WHERE palletId = ?
 		AND blocked is false AND state = 'freezer'";
@@ -240,7 +244,7 @@ class Database {
 		ON PalletsDeliveredToOrderId.orderId=Deliveries.orderId";
 		$this->executeUpdate($sql);
 
-		$sql = "SELECT orderId,customerName FROM NbrOfDeliveries
+		$sql = "SELECT orderId FROM NbrOfDeliveries
 		WHERE nbrOfPallets > nbrDelivered OR nbrDelivered is NULL";
 		return $this->executeQuery($sql, array($productName));
 
