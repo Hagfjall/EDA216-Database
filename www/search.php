@@ -83,7 +83,7 @@
 <hr>
 <p>
 	<t><Strong>Search for blocked pallets: </strong> <br>
-	<form method=post action="searchByDeliveryDateTime.php">
+	<form method=post action="searchBlockedPallets.php">
 	<input type=submit value="Show Blocked Pallets">
 </form>
 <hr>

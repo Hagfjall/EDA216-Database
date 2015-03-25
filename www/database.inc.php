@@ -226,6 +226,12 @@ class Database {
 		return $result;
 	}
 
+	public function getBlockedPallets(){
+		$sql = "SELECT palletId, productionDateTime, state, productName FROM Pallets WHERE blocked is true ORDER BY productionDateTime";
+		$result = $this->executeQuery($sql);
+		return $result;
+	}
+
 }
 
 ?>
