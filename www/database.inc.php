@@ -191,7 +191,7 @@ class Database {
 	}
 
 	public function getPalletInfo($palletId){
-		$sql = "SELECT * FROM Pallets  WHERE palletId = ?";
+		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders WHERE palletId = ?";
 		$result = $this->executeQuery($sql, array($palletId));
 		return $result;
 	}

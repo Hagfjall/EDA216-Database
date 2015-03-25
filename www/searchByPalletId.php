@@ -10,17 +10,33 @@
 <html>
 <head><title>KK Sweden AB - Search</title><head>
 <body><h1>Pallet Info</h1>
-<?php
-	$palletInfo = $palletInfo[0];
-	if(empty($palletInfo)) {
-		print("No such pallet!");
-	} else {
-	print("<b>Pallet ID: </b>".$palletInfo['palletId']."<br>");
-	print("<b>Product: </b>".$palletInfo['productName']."<br>");
-	print("<b>Produced: </b>".$palletInfo['productionDateTime']."<br>");
-	print("<b>Status: </b>".$palletInfo['state']."<br>");
-	print("<b>Blocked?: </b>".$palletInfo['blocked']."<br>");
-	}
-?>
+		<table style="width:100%">
+		<tr>
+		<td><b>orderId</b></td>
+		<td><b>palletId</b></td>
+		<td><b>productionDateTime</b></td>
+		<td><b>state</b></td>
+		<td><b>blocked</b></td>
+		<td><b>productName</b></td>
+		<td><b>deliveryDateTime</b></td>
+		<td><b>desiredDeliveryDate</b></td>
+		<td><b>customerName</b></td>
+		</tr>
+		<?php
+		foreach($palletInfo as $row){
+			print "<tr>";
+			print "<td> ".$row['orderId']."</td>";
+			print "<td> ".$row['palletId']."</td>";
+			print "<td> ".$row['productionDateTime']."</td>";
+			print "<td> ".$row['state']."</td>";
+			print "<td> ".$row['blocked']."</td>";
+			print "<td> ".$row['productName']."</td>";
+			print "<td> ".$row['deliveryDateTime']."</td>";
+			print "<td> ".$row['desiredDeliveryDate']."</td>";
+			print "<td> ".$row['customerName']."</td>";
+			print "</tr>";
+		}
+		?>
+		</table>
 </body>
 </html>
