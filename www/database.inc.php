@@ -221,7 +221,7 @@ class Database {
 
 		$sql = "CREATE OR REPLACE view as PalletsDeliveredToOrderId AS SELECT orderId, count(*) nbrDelivered 
 		FROM PalletDeliveries NATURAL JOIN Pallets WHERE productName = ? GROUP BY orderId";
-		$this->executeUpdate($sql, $productName[0]);
+		$this->executeUpdate($sql, array($productName[0]));
 		
 		$sql = "SELECT orderId FROM Orders, ProductOrders, PalletsDeliveredToOrderId where Orders.palletId = ProductOrders.palletId 
 		AND productName = ? AND nbrOfPallets > nbrDelivered";
