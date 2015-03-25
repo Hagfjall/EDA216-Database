@@ -14,7 +14,11 @@
 </head>
 
 <body>
-	<p><?php print $orders[0]; ?></p>
+	<p>
+		<?php
+		 print $orders[0];
+		?>
+	</p>
 <form method=post action="deliverPallet.php">
 		<select name="orderId" size=10>
 		<?php

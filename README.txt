@@ -22,3 +22,7 @@ Blocked pallets:
 
 Create pallets:
   Som movie-booking isch
+
+
+Diskutera:
+  Search by customer doesn't show any info about deliveryDate or things like that

@@ -108,7 +108,7 @@ class Database {
 	/**
 	* returns YYYY-MM-DD HH:MM:SS FROM YYYY-MM-DDTHH:MM:SS.msmsms
 	*/
-	private function getDateTime($dateTimeFromHTML){
+	private function convertDateTime($dateTimeFromHTML){
 		$ret = substr($dateTimeFromHTML,0,10)." ".substr($dateTimeFromHTML,11,8);
 		return $ret;
 	}
@@ -174,17 +174,16 @@ class Database {
 		return $result;
 	}
 
-//2015-01-01T11:42:13.510
 	public function blockPallets($product, $intervalStart, $intervalEnd) {
-		$intervalStart = $this->getDateTime($intervalStart);
-		$intervalEnd = $this->getDateTime($intervalEnd);
+		$intervalStart = $this->convertDateTime($intervalStart);
+		$intervalEnd = $this->convertDateTime($intervalEnd);
 		$sql = "UPDATE Pallets SET blocked = true  WHERE productName = ? AND productionDateTime >= ? AND productionDateTime <= ?";
 		$result = $this->executeUpdate($sql, array($product, $intervalStart, $intervalEnd));
 		return $result;
 	}
 
 
-		public function freezerExitScanner($palletId){
+	public function freezerExitScanner($palletId){
 
 	}
 
@@ -211,16 +210,16 @@ class Database {
 	}
 
 	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
-		$intervalStart = $this->getDateTime($intervalStart);
-		$intervalEnd = $this->getDateTime($intervalEnd);
+		$intervalStart = $this->convertDateTime($intervalStart);
+		$intervalEnd = $this->convertDateTime($intervalEnd);
 		$sql = "SELECT * FROM Pallets  WHERE productionDateTime >= ? AND productionDateTime <= ? ORDER BY productionDateTime";
 		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 		return $result;
 
 	}
 	public function getPalletsByDeliveryDateTime($intervalStart, $intervalEnd){
-		$intervalStart = $this->getDateTime($intervalStart);
-		$intervalEnd = $this->getDateTime($intervalEnd);
+		$intervalStart = $this->convertDateTime($intervalStart);
+		$intervalEnd = $this->convertDateTime($intervalEnd);
 		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders  WHERE deliveryDateTime >= ? AND deliveryDateTime <= ? ORDER BY deliveryDateTime";
 		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 		return $result;
