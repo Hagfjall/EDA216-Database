@@ -253,6 +253,8 @@ class Database {
 	public function deliverPallet($palletId, $orderId){
 		$sql = "INSERT INTO PalletDeliveries VALUES(?, ?, NOW())";
 		$this->executeUpdate($sql, array($palletId, $orderId));
+		$sql = "UPDATE Pallets SET state = 'delivered' WHERE palletId = ?";
+		$this->executeUpdate($sql, array($palletId));
 	}
 
 	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
