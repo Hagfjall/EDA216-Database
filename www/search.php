@@ -56,7 +56,7 @@
 		?>
 		</select>
 <br>
-		<input type=submit value="Search by product">
+		<input type=submit value="Search by customer">
 	</form>
 <hr>
 
