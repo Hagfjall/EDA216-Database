@@ -27,15 +27,16 @@ Create pallets:
 Diskutera:
   Search by customer doesn't show any info about deliveryDate or things like that
 
-
-  Pallets.palletId palletId, productionDateTime, state, blocked,
-  productName, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName ";
-  $sql = "SELECT
-  Pallets.palletId palletId, productionDateTime, state, blocked,productName, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName
-  FROM Pallets LEFT OUTER JOIN PalletDeliveries
-  ON Pallets.palletId=palletDeliveries.palletId LEFT OUTER JOIN Orders
-  ON PalletDeliveries.orderId=Orders.orderId
-
-
-  //FUNKAR
-  select Pallets.palletId palletId, productionDateTime, state, blocked, productName, orderId , deliveryDateTime, desiredDeliveryDate, customerName from Pallets LEFT OUTER JOIN (select palletId, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName from PalletDeliveries NATURAL JOIN Orders) InnerQ ON Pallets.palletId=InnerQ.palletId
+1. A cover sheet with the name of the project, your names, education programs, and e-mail addresses. You must check mail to these addresses regularly.
+Also give the date of submission and complete instructions for running your program.
+2. An introduction (what the project is about, etc.).
+3. Something about requirements that you fulfill or don’t fulfill.
+4. An outline of your system (which database manager you use, which programs you have
+written, how the programs communicate with the database, etc.).
+5. An E/R diagram which describes the system.
+6. Relations. Indicate primary keys, possibly secondary keys, and foreign keys. You must
+show that the relations are normalized according to your chosen normal form (if a relation “obviously” is in BCNF you may say so, provided that you justify your statement). If a
+relation is in a lower normal form than BCNF, you must justify this choice.
+7. SQL statements to create all tables, views, stored procedures, and other database elements.
+(Don’t include statements to create the initial contents of the database.)
+8. A user’s manual (not necessary if everything in the program is self-explanatory).
