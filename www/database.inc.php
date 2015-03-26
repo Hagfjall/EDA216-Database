@@ -169,7 +169,7 @@ class Database {
 		$intervalStart = $this->convertDateTime($intervalStart);
 		$intervalEnd = $this->convertDateTime($intervalEnd);
 		$sql = "UPDATE Pallets SET blocked = true  WHERE productName = ?
-		AND productionDateTime >= ? AND productionDateTime <= ? AND state <> 'delivered'";
+		AND productionDateTime >= ? AND productionDateTime <= ? AND state = 'freezer'";
 		return $this->executeUpdate($sql, array($product, $intervalStart, $intervalEnd));
 	}
 

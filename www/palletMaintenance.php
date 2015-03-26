@@ -17,7 +17,6 @@
 <a href="blockPallets1.php">Block Pallets</a><br>
 <a href="producePallets.php">Pallet Production</a><br>
 <a href="search.php">Search</a><br>
-<a href="deliverPallet.php">Deliver Pallet</a><br>
 
 <!-- Code for barcode reader-box-->
 <form method="post" action="barcodeReader.php">
