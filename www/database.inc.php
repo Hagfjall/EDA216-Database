@@ -130,19 +130,19 @@ class Database {
 		return $ret;
 	}
 
-	public function producePallets($cookieType, $amount) {
-		$sql = "SELECT ingredientName AS name, quantity FROM Ingredients  WHERE productName = ?";
-		$result = $this->executeQuery($sql, array($cookieType));
+	public function producePallets($productName, $amount) {
+		$sql = "SELECT ingredientName, quantity FROM Ingredients  WHERE productName = ?";
+		$result = $this->executeQuery($sql, array($productName));
 
 		$updateQuery = "UPDATE RawMaterials SET totalQuantity = totalQuantity - ?  WHERE rawMaterialName = ?";
-		$insertQuery = "INSERT INTO Pallets VALUES (null, default, 'freezer', false, ?)";
+		$insertQuery = "INSERT INTO Pallets(productName) VALUES (?)";
 		$this->conn->beginTransaction();
 		foreach ($result as $ingr) {
-			$totAmount = 54 * $ingr['quantity'] * $amount; //TODO FÖRTYDLIGA SENARE
-			$this->executeUpdate($updateQuery, array($totAmount, $ingr['name']));
+			$totAmount = 54 * $ingr['quantity'] * $amount;
+			$this->executeUpdate($updateQuery, array($totAmount, $ingr['ingredientName']));
 		}
 		for ($i = 0; $i < $amount; $i = $i + 1) {
-			$this->executeUpdate($insertQuery, array($cookieType));
+			$this->executeUpdate($insertQuery, array($productName));
 		}
 		$this->conn->commit();
 	}
