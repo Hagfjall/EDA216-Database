@@ -118,19 +118,6 @@ class Database {
 		return $sql;
 	}
 
-	/**
-	 * Check if a user with the specified user id exists in the database.
-	 * Queries the Users database table.
-	 *
-	 * @param userId The user id
-	 * @return true if the user exists, false otherwise.
-	 */
-	public function userExists($userId) {
-		$sql = "SELECT userId FROM Users  WHERE userId = ?";
-		$result = $this->executeQuery($sql, array($userId));
-		return count($result) == 1;
-	}
-
 	public function getIngredients(){
 		$sql = "SELECT rawMaterialName FROM RawMaterials";
 		$result = $this->executeQuery($sql);
@@ -151,7 +138,7 @@ class Database {
 		$insertQuery = "INSERT INTO Pallets VALUES (null, default, 'freezer', false, ?)";
 		$this->conn->beginTransaction();
 		foreach ($result as $ingr) {
-			$totAmount = 54 * $ingr['quantity'] * $amount; //FÖRTYDLIGA SENARE
+			$totAmount = 54 * $ingr['quantity'] * $amount; //TODO FÖRTYDLIGA SENARE
 			$this->executeUpdate($updateQuery, array($totAmount, $ingr['name']));
 		}
 		for ($i = 0; $i < $amount; $i = $i + 1) {
@@ -172,10 +159,10 @@ class Database {
 		return $ret;
 	}
 
+	//TODO REMOVE
 	public function getPallets() {
 		$sql = "SELECT palletId, productionDateTime AS prodDate, state, blocked, productName FROM Pallets";
-		$result = $this->executeQuery($sql);
-		return $result;
+		return $this->executeQuery($sql);
 	}
 
 	public function blockPallets($product, $intervalStart, $intervalEnd) {
@@ -183,22 +170,18 @@ class Database {
 		$intervalEnd = $this->convertDateTime($intervalEnd);
 		$sql = "UPDATE Pallets SET blocked = true  WHERE productName = ?
 		AND productionDateTime >= ? AND productionDateTime <= ? AND state <> 'delivered'";
-		$result = $this->executeUpdate($sql, array($product, $intervalStart, $intervalEnd));
-		return $result;
+		return $this->executeUpdate($sql, array($product, $intervalStart, $intervalEnd));
 	}
 
 	public function freezerExitScanner($palletId){
 		$sql = "UPDATE Pallets SET state = 'delivered' WHERE palletId = ?";
-		$result = $this->executeUpdate($sql, array($palletId));
-		return $result;
+		return $this->executeUpdate($sql, array($palletId));
 	}
 
 	public function getPalletInfo($palletId){
 		$sql = $this->getAllPalletInfoQuery();
 		$sql = $sql."WHERE palletId= ?";
-		print($sql);
-		$result = $this->executeQuery($sql, array($palletId));
-		return $result;
+		return $this->executeQuery($sql, array($palletId));
 	}
 
 	public function getPalletsWithProduct($productName){
