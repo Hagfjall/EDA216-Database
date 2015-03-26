@@ -80,15 +80,44 @@ foreign key (orderId) references Orders(orderId),
 foreign key (productName) references Products(productName)
 );
 
+-- Adding Products
 insert into Products(productName) values('Nut Ring');
+insert into Products(productName) values('Nut Cookie');
+insert into Products(productName) values('Amneris');
+
+-- Adding Raw materials
 insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Flour', '2000-01-01', 10, 1000, 'g');
 insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Butter', '2000-01-01', 10, 1000, 'g');
 insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Icing Sugar', '2000-01-01', 10, 1000, 'g');
 insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Roasted, chopped nuts', '2000-01-01', 10, 100, 'g');
+
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Fine-ground nuts', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Ground, roasted nuts', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Bread crumbs', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Sugar', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Egg Whites', '2000-01-01', 10, 1000, 'dl');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Chocolate', '2000-01-01', 10, 1000, 'g');
+
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Marzipan', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Potato starch', '2000-01-01', 10, 1000, 'g');
+insert into RawMaterials(rawMaterialName, lastDeliveryDate, lastDeliveryAmount, totalQuantity, unit) values('Wheat flour', '2000-01-01', 10, 1000, 'g');	
+
+-- Adding Ingredients
 insert into Ingredients(ingredientName, productName, quantity) values('Flour', 'Nut Ring', 450);
 insert into Ingredients(ingredientName, productName, quantity) values('Butter', 'Nut Ring', 450);
 insert into Ingredients(ingredientName, productName, quantity) values('Icing sugar', 'Nut Ring', 190);
 insert into Ingredients(ingredientName, productName, quantity) values('Roasted, chopped nuts', 'Nut Ring', 225);
+
+insert into Ingredients(ingredientName, productName, quantity) values('Fine-ground nuts', 'Nut Cookie', 225);
+insert into Ingredients(ingredientName, productName, quantity) values('Ground, roasted nuts', 'Nut Cookie', 225);
+insert into Ingredients(ingredientName, productName, quantity) values('Bread crumbs', 'Nut Cookie', 225);
+insert into Ingredients(ingredientName, productName, quantity) values('Sugar', 'Nut Cookie', 225);
+insert into Ingredients(ingredientName, productName, quantity) values('Whites', 'Nut Cookie', 225);
+insert into Ingredients(ingredientName, productName, quantity) values('Roasted, chopped nuts', 'Nut Cookie	', 225);
+
+
+
+
 insert into Customers(customerName, address, username, password) values('Finkakor AB', 'Helsingborg', 'finkakor', 'password');
 insert into Orders(desiredDeliveryDate, customerName) values('2000-01-01', 'Finkakor AB');
 insert into Orders(desiredDeliveryDate, customerName) values('2015-04-01', 'Finkakor AB');
