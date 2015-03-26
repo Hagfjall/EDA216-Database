@@ -287,7 +287,14 @@ class Database {
 				print "<td> ".$row['palletId']."</td>";
 				print "<td> ".$row['productionDateTime']."</td>";
 				print "<td> ".$row['state']."</td>";
-				print "<td> ".$row['blocked']."</td>";
+				print "<td> ";
+				if($row['blocked'] == 1){
+					print("yes");
+				}
+				else{
+					print("no");
+				}
+				print "</td>";
 				print "<td> ".$row['productName']."</td>";
 				print "<td> ".$row['orderId']."</td>";
 				print "<td> ".$row['deliveryDateTime']."</td>";
