@@ -26,3 +26,16 @@ Create pallets:
 
 Diskutera:
   Search by customer doesn't show any info about deliveryDate or things like that
+
+
+  Pallets.palletId palletId, productionDateTime, state, blocked,
+  productName, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName ";
+  $sql = "SELECT
+  Pallets.palletId palletId, productionDateTime, state, blocked,productName, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName
+  FROM Pallets LEFT OUTER JOIN PalletDeliveries
+  ON Pallets.palletId=palletDeliveries.palletId LEFT OUTER JOIN Orders
+  ON PalletDeliveries.orderId=Orders.orderId
+
+
+  //FUNKAR
+  select Pallets.palletId palletId, productionDateTime, state, blocked, productName, orderId , deliveryDateTime, desiredDeliveryDate, customerName from Pallets LEFT OUTER JOIN (select palletId, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName from PalletDeliveries NATURAL JOIN Orders) InnerQ ON Pallets.palletId=InnerQ.palletId

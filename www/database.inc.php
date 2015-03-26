@@ -113,6 +113,15 @@ class Database {
 		return $ret;
 	}
 
+	private function getAllPalletInfoQuery(){
+		$columns = "Pallets.palletId palletId, productionDateTime, state, blocked,
+		productName, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName ";
+		$sql = "SELECT ".$columns." FROM Pallets LEFT OUTER JOIN PalletDeliveries
+		ON Pallets.palletId=palletDeliveries.palletId LEFT OUTER JOIN Orders
+		ON PalletDeliveries.orderId=Orders.orderId ";
+		return $sql;
+	}
+
 	/**
 	 * Check if a user with the specified user id exists in the database.
 	 * Queries the Users database table.
@@ -191,7 +200,9 @@ class Database {
 	}
 
 	public function getPalletInfo($palletId){
-		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders WHERE palletId = ?";
+		$sql = $this->getAllPalletInfoQuery();
+		$sql = $sql + " WHERE Pallets.palletId= ?";
+		print($sql);
 		$result = $this->executeQuery($sql, array($palletId));
 		return $result;
 	}
@@ -208,7 +219,9 @@ class Database {
 	}
 
 	public function getPalletsToCustomer($customerName) {
-		$sql = "SELECT palletId FROM PalletDeliveries NATURAL JOIN Orders NATURAL JOIN Customers  WHERE customerName = ?";
+		$sql = "SELECT * FROM PalletDeliveries NATURAL JOIN Orders
+		NATURAL JOIN Customers NATURAL JOIN Pallets WHERE customerName = ?
+		ORDER BY deliveryDateTime";
 		return $this->executeQuery($sql, array($customerName));
 	}
 
@@ -280,6 +293,37 @@ class Database {
 		  WHERE blocked is true ORDER BY productionDateTime";
 		$result = $this->executeQuery($sql);
 		return $result;
+	}
+
+	public function printHTMLCodeForTable($input){
+		print("<table style=\"width:100%\">
+	  <tr>
+		<td><b>palletId</b></td>
+		<td><b>productionDateTime</b></td>
+		<td><b>state</b></td>
+		<td><b>blocked</b></td>
+		<td><b>productName</b></td>
+		<td><b>orderId</b></td>
+		<td><b>deliveryDateTime</b></td>
+		<td><b>desiredDeliveryDate</b></td>
+		<td><b>customerName</b></td>
+		</tr>");
+
+			foreach($input as $row){
+				print "<tr>";
+				print "<td> ".$row['palletId']."</td>";
+				print "<td> ".$row['productionDateTime']."</td>";
+				print "<td> ".$row['state']."</td>";
+				print "<td> ".$row['blocked']."</td>";
+				print "<td> ".$row['productName']."</td>";
+				print "<td> ".$row['orderId']."</td>";
+				print "<td> ".$row['deliveryDateTime']."</td>";
+				print "<td> ".$row['desiredDeliveryDate']."</td>";
+				print "<td> ".$row['customerName']."</td>";
+				print "</tr>";
+			}
+	print("</table>");
+
 	}
 }
 
