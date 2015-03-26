@@ -114,11 +114,7 @@ class Database {
 	}
 
 	private function getAllPalletInfoQuery(){
-		$columns = "Pallets.palletId palletId, productionDateTime, state, blocked,
-		productName, Orders.orderId orderId, deliveryDateTime, desiredDeliveryDate, customerName ";
-		$sql = "SELECT ".$columns." FROM Pallets LEFT OUTER JOIN PalletDeliveries
-		ON Pallets.palletId=palletDeliveries.palletId LEFT OUTER JOIN Orders
-		ON PalletDeliveries.orderId=Orders.orderId ";
+		$sql = "SELECT * FROM (SELECT Pallets.palletId palletId, productionDateTime, state, blocked, productName, orderId, deliveryDateTime, desiredDeliveryDate, customerName FROM Pallets LEFT OUTER JOIN (SELECT * FROM PalletDeliveries NATURAL JOIN Orders) InnerQ ON Pallets.palletId=InnerQ.palletId) OuterQ ";
 		return $sql;
 	}
 
@@ -146,7 +142,6 @@ class Database {
 		}
 		return $ret;
 	}
-
 
 	public function producePallets($cookieType, $amount) {
 		$sql = "SELECT ingredientName AS name, quantity FROM Ingredients  WHERE productName = ?";
@@ -192,7 +187,6 @@ class Database {
 		return $result;
 	}
 
-
 	public function freezerExitScanner($palletId){
 		$sql = "UPDATE Pallets SET state = 'delivered' WHERE palletId = ?";
 		$result = $this->executeUpdate($sql, array($palletId));
@@ -201,16 +195,16 @@ class Database {
 
 	public function getPalletInfo($palletId){
 		$sql = $this->getAllPalletInfoQuery();
-		$sql = $sql + " WHERE Pallets.palletId= ?";
+		$sql = $sql."WHERE palletId= ?";
 		print($sql);
 		$result = $this->executeQuery($sql, array($palletId));
 		return $result;
 	}
 
 	public function getPalletsWithProduct($productName){
-		$sql = "SELECT * FROM Pallets  WHERE productName = ?";
-		$result = $this->executeQuery($sql, array($productName));
-		return $result;
+		$sql = $this->getAllPalletInfoQuery();
+		$sql = $sql."WHERE productName = ? ORDER BY productionDateTime,deliveryDateTime";
+		return $this->executeQuery($sql, array($productName));
 	}
 
 	public function getCustomers(){
@@ -219,9 +213,8 @@ class Database {
 	}
 
 	public function getPalletsToCustomer($customerName) {
-		$sql = "SELECT * FROM PalletDeliveries NATURAL JOIN Orders
-		NATURAL JOIN Customers NATURAL JOIN Pallets WHERE customerName = ?
-		ORDER BY deliveryDateTime";
+		$sql = $this->getAllPalletInfoQuery();
+		$sql = $sql."WHERE customerName = ? ORDER BY deliveryDateTime";
 		return $this->executeQuery($sql, array($customerName));
 	}
 
@@ -273,26 +266,23 @@ class Database {
 	public function getPalletsByProductionDateTime($intervalStart, $intervalEnd){
 		$intervalStart = $this->convertDateTime($intervalStart);
 		$intervalEnd = $this->convertDateTime($intervalEnd);
-		$sql = "SELECT * FROM Pallets  WHERE productionDateTime >= ?
-		AND productionDateTime <= ? ORDER BY productionDateTime";
-		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
-		return $result;
+		$sql = $this->getAllPalletInfoQuery();
+		$sql = $sql."WHERE productionDateTime >= ? AND productionDateTime <= ? ORDER BY productionDateTime";
+		return $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 
 	}
 	public function getPalletsByDeliveryDateTime($intervalStart, $intervalEnd){
 		$intervalStart = $this->convertDateTime($intervalStart);
 		$intervalEnd = $this->convertDateTime($intervalEnd);
-		$sql = "SELECT * FROM Pallets NATURAL JOIN PalletDeliveries NATURAL JOIN Orders
-		WHERE deliveryDateTime >= ? AND deliveryDateTime <= ? ORDER BY deliveryDateTime";
-		$result = $this->executeQuery($sql, array($intervalStart,$intervalEnd));
-		return $result;
+		$sql = $this->getAllPalletInfoQuery();
+		$sql = $sql."WHERE deliveryDateTime >= ? AND deliveryDateTime <= ? ORDER BY deliveryDateTime";
+		return $this->executeQuery($sql, array($intervalStart,$intervalEnd));
 	}
 
 	public function getBlockedPallets(){
-		$sql = "SELECT palletId, productionDateTime, state, productName FROM Pallets
-		  WHERE blocked is true ORDER BY productionDateTime";
-		$result = $this->executeQuery($sql);
-		return $result;
+		$sql = $this->getAllPalletInfoQuery();
+		$sql = $sql."WHERE blocked is true ORDER BY productionDateTime";
+		return $this->executeQuery($sql);
 	}
 
 	public function printHTMLCodeForTable($input){
@@ -323,7 +313,6 @@ class Database {
 				print "</tr>";
 			}
 	print("</table>");
-
 	}
 }
 
